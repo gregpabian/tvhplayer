@@ -1,0 +1,82 @@
+#SceneMain {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 960px;
+	height: 540px;
+	background: #000;
+	color: #fff;
+}
+
+#SceneMain .title {
+	display: block;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+#list {
+	position: absolute;
+	top: 55px;
+	bottom: 35px;
+	left: 10px;
+	right: 10px;
+}
+
+.list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.list li {
+	display: block;
+	float: left;
+	width: 430px;
+	height: 45px;
+	background: #333;
+	margin: 10px;
+	padding: 10px;
+}
+
+.list .focused {
+	background: #666;
+}
+
+.focused .focused {
+	background: #09f;
+}
+
+.list .name {
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+}
+
+.list .program {
+	margin: 0;
+	padding: 0;
+}
+
+.loading .scrollbar {
+	display: none;
+}
+
+.scrollbar {
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	bottom: 10px;
+	height: 15px;
+	background: #000;
+}
+
+.scrollbar .bar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 15px;
+	background: #fff;
+}

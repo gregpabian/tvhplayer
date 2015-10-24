@@ -1,0 +1,7 @@
+{ 
+   "scenes" : ["Main", "Player", "Settings"],
+   "files" : [],
+
+   "changeSource" : true,
+   "theme" : "base" 
+}

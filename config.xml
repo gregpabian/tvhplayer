@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+	<widgetname>TVHPlayer</widgetname>
+	<ver>1</ver>
+	<fullwidget>y</fullwidget>
+	<srcctl>y</srcctl>
+	<ticker>n</ticker>
+	<childlock>n</childlock>
+	<audiomute>n</audiomute>
+	<videomute>n</videomute>
+	<dcont>y</dcont>
+	<type>user</type>
+	<movie>y</movie>
+	<category>video</category>
+	<description>SmartTV Player for TV Headend</description>
+	<width>960</width>
+	<height>540</height>
+	<ThumbIcon>images/ico106x87.png</ThumbIcon>
+	<BigThumbIcon>images/ico115x95.png</BigThumbIcon>
+	<ListIcon>images/ico86x70.png</ListIcon>
+	<BigListIcon>images/ico95x78.png</BigListIcon>
+	<author>
+		<name>Greg Pabian</name>
+		<email>greg.pabian@gmail.com</email>
+		<link>http://pixelchinchilla.com</link>
+		<organization>PixelChinchilla</organization>
+	</author>
+</widget>

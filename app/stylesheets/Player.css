@@ -1,0 +1,9 @@
+#ScenePlayer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 960px;
+	height: 540px;
+	background: #000;
+	color: #fff;
+}
