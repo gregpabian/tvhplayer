@@ -62,11 +62,11 @@ ScenePlayer.prototype.hide = function() {
 };
 
 ScenePlayer.prototype.showLoading = function() {
-	this.$loader.sfLoading('show');
+	this.$loader.dzLoader('show');
 };
 
 ScenePlayer.prototype.hideLoading = function() {
-	this.$loader.sfLoading('hide');
+	this.$loader.dzLoader('hide');
 };
 
 ScenePlayer.prototype.showKeyhelp = function() {

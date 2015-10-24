@@ -1,0 +1,67 @@
+.dz-loader {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.dz-loader-inner {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -32px 0 0 -32px;
+	width: 64px;
+	height: 64px;
+	background-image: url('../../images/loader.png');
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
+
+.dz-loader-frame-0 {
+	background-position: 0 0;
+}
+
+.dz-loader-frame-1 {
+	background-position: -64px 0;
+}
+
+.dz-loader-frame-2 {
+	background-position: -128px 0;
+}
+
+.dz-loader-frame-3 {
+	background-position: -192px 0;
+}
+
+.dz-loader-frame-4 {
+	background-position: -256px 0;
+}
+
+.dz-loader-frame-5 {
+	background-position: -320px 0;
+}
+
+.dz-loader-frame-6 {
+	background-position: -384px 0;
+}
+
+.dz-loader-frame-7 {
+	background-position: -448px 0;
+}
+
+.dz-loader-frame-8 {
+	background-position: -512px 0;
+}
+
+.dz-loader-frame-9 {
+	background-position: -576px 0;
+}
+
+.dz-loader-frame-10 {
+	background-position: -640px 0;
+}
+
+.dz-loader-frame-11 {
+	background-position: -704px 0;
+}

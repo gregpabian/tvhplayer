@@ -7,3 +7,53 @@
 	background: #000;
 	color: #fff;
 }
+
+#SceneSettings .title {
+	display: block;
+	position: absolute;
+	font-size: 20px;
+	top: 20px;
+	left: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+.form {
+	display: block;
+	position: absolute;
+	top: 45px;
+	left: 20px;
+	right: 20px;
+	border: 0;
+	padding: 10px;
+	overflow: hidden;
+}
+
+.form label {
+	display: block;
+	position: relative;
+	left: 0;
+	right: 0;
+	top: 0;
+	padding: 20px;
+	margin: 10px;
+	background: #333;
+}
+
+.form .focused {
+	background: #666;
+}
+
+.focused .focused {
+	background: #09f;
+}
+
+.form label span {
+	display: inline-block;
+	text-transform: capitalize;
+	width: 150px;
+}
+
+.form input[type=checkbox] {
+	display: none;
+}

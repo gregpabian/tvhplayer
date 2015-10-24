@@ -123,7 +123,7 @@ List.prototype = {
 	},
 
 	_setLoading: function(loading) {
-		this.$el.toggleClass('loading', loading).find('.loader').sfLoading(loading ? 'show' : 'hide');
+		this.$el.toggleClass('loading', loading).find('.loader').dzLoader(loading ? 'show' : 'hide');
 		this.loading = loading;
 	},
 

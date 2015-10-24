@@ -4,8 +4,9 @@ var Settings = {
 	defaultSettings: {
 		address: '192.168.0.10',
 		port: 9981,
-		user: 'test',
-		password: 'test1234'
+		login: false,
+		user: 'user',
+		password: 'password'
 	},
 
 	settings: {},
@@ -61,7 +62,7 @@ var Settings = {
 	save: function(content) {
 		var file = this.fs.openCommonFile('settings', 'w');
 
-		content = JSON.stringify(content);
+		content = JSON.stringify(this.settings);
 
 		if (file) {
 			file.writeLine(content);
