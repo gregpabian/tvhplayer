@@ -4,6 +4,50 @@
 	top: 0;
 	width: 960px;
 	height: 540px;
-	background: #000;
 	color: #fff;
+}
+
+
+#volume {
+	position: absolute;
+	top: 50%;
+	right: 20px;
+	padding: 16px;
+	margin-top: -44px;
+	background: #333;
+	border-top: 1px solid #666;
+	border-left: 1px solid #666;
+	overflow: hidden;
+	display: none;
+}
+
+#volume.muted {
+	margin-top: -32px;
+}
+
+#volume .icon {
+	float: left;
+	clear: left;
+	width: 32px;
+	height: 32px;
+	background: url('../../images/volume_sprite.png') 0 0;
+}
+
+#volume.muted .icon {
+	background: url('../../images/volume_sprite.png') -48px 0;
+}
+
+#volume .value {
+	display: block;
+	float: left;
+	clear: left;
+	width: 32px;
+	height: 24px;
+	line-height: 24px;
+	text-align: center;
+	font-size: 20px;
+}
+
+#volume.muted .value {
+	display: none;
 }

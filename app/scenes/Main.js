@@ -46,9 +46,10 @@ SceneMain.prototype.showInfo = function(item) {
 		'<p class="summary">', epg.summary, '</p>'
 	];
 
+	this.$infoBox.css('visibility', 'hidden');
 	this.$infoBox.html(html.join(''));
-	var height = this.$infoBox.height();
-	this.$infoBox.css('margin-top', -height / 2 + 'px');
+	this.$infoBox.css('margin-top', -this.$infoBox.height() / 2 + 'px');
+	this.$infoBox.css('visibility', 'visible');
 };
 
 SceneMain.prototype.hideInfo = function() {

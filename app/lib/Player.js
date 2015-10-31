@@ -24,9 +24,6 @@ var Player = {
 		this.plugin.OnStreamNotFound = 'Player.onStreamNotFound';
 
 		this.plugin.SetDisplayArea(0, 0, 960, 540);
-
-		// $.sfService.setVolumeControl(true);
-		// $.sfService.setScreenSaver(false);
 	},
 
 	destroy: function() {
@@ -35,9 +32,6 @@ var Player = {
 		if (this.state === this.PLAYING || this.state === this.PAUSED) {
 			this.plugin.Stop();
 		}
-
-		// $.sfService.setVolumeControl(true);
-		// $.sfService.setScreenSaver(true);
 	},
 
 	play: function(url) {

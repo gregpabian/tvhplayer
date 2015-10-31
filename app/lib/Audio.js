@@ -14,18 +14,20 @@ var Audio = {
 	},
 
 	volumeUp: function() {
-		if (this.muted) return;
-		this.plugin.SetVolumeWithKey(1);
-	},
-
-	volumeDown: function() {
-		if (this.muted) return;
 		this.plugin.SetVolumeWithKey(0);
 	},
 
-	setMute: function(isMuted) {
-		this.muted = isMuted;
-		Audio.plugin.SetSystemMute(isMuted);
+	volumeDown: function() {
+		this.plugin.SetVolumeWithKey(1);
+	},
+
+	toggleMute: function() {
+		this.muted = !this.muted;
+		this.plugin.SetSystemMute(this.muted);
+	},
+
+	getVolume: function() {
+		return this.plugin.GetVolume();
 	}
 };
 
