@@ -97,9 +97,9 @@ ScenePlayer.prototype.handleShow = function(item) {
 
 	if (settings.login) {
 		// TODO: could this be improved?
-		url = 'http://' + settings.user + ':' + settings.password + '@' + settings.address + ':' + settings.port + '/stream/service/' + item.uuid;
+		url = 'http://' + settings.user + ':' + settings.password + '@' + settings.address + ':' + settings.port + '/stream/service/' + item.services[0];
 	} else {
-		url = 'http://' + settings.address + ':' + settings.port + '/stream/service/' + item.uuid;
+		url = 'http://' + settings.address + ':' + settings.port + '/stream/service/' + item.services[0];
 	}
 
 	Player.play(url);

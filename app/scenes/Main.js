@@ -2,9 +2,13 @@ function SceneMain() {}
 
 SceneMain.prototype.initialize = function() {
 	alert("SceneMain.initialize()");
-	var settings = Settings.settings;
-	this.url = 'http://' + settings.address + ':' + settings.port + '/api/mpegts/service/grid';
-	this.list = new List('#list');
+	this.settings = Settings.settings;
+	this.epg = EPG;
+	this.url = 'http://' + this.settings.address + ':' + this.settings.port;
+	this.list = new List('#list', this.epg);
+	this.$info = $('#info');
+	this.$infoBox = this.$info.find('.info-box');
+	this.showingInfo = false;
 };
 
 SceneMain.prototype.play = function(item) {
@@ -16,20 +20,46 @@ SceneMain.prototype.play = function(item) {
 
 SceneMain.prototype.showInfo = function(item) {
 	alert("SceneMain.showInfo()");
-};
+	this.showingInfo = true;
+	this.showInfoKeyhelp();
+	this.list.blur();
+	this.$info.show();
 
-SceneMain.prototype.reload = function() {
-	var settings = Settings.settings;
+	var epg = this.epg.get(item.uuid) || {};
+	var iconUrl = /https?/.test(epg.channelIcon) ? epg.channelIcon : this.url + '/' + epg.channelIcon;
 
-	if (settings.login) {
-		this.list.load(this.url, settings.user, settings.password);
-	} else {
-		this.list.load(this.url);
+	function pad(num) {
+		return num < 10 ? '0' + num : num;
 	}
+
+	function formatDate(timestamp) {
+		var date = new Date(timestamp * 1000);
+
+		return date.getHours() + ':' + pad(date.getMinutes());
+	}
+
+	var html = [
+		'<img class="logo" src="', iconUrl, '">',
+		'<p class="channel-name">', (epg.channelName || item.name), '</p>',
+		'<p class="program-title">', epg.title, '</p>',
+		'<p class="duration">', formatDate(epg.start), ' - ', formatDate(epg.stop), '</p>',
+		'<p class="summary">', epg.summary, '</p>'
+	];
+
+	this.$infoBox.html(html.join(''));
+	var height = this.$infoBox.height();
+	this.$infoBox.css('margin-top', -height / 2 + 'px');
 };
 
-SceneMain.prototype.handleShow = function() {
-	alert("SceneMain.handleShow()");
+SceneMain.prototype.hideInfo = function() {
+	alert("SceneMain.hideInfo()");
+	this.showingInfo = false;
+	this.showMainKeyhelp();
+	this.list.focus();
+	this.$info.hide();
+};
+
+SceneMain.prototype.showMainKeyhelp = function() {
 	$('#keyhelpMain').sfKeyHelp({
 		'enter': 'Play',
 		'info': 'Info',
@@ -39,7 +69,26 @@ SceneMain.prototype.handleShow = function() {
 		'blue': 'Settings',
 		'return': 'Return'
 	});
+};
 
+SceneMain.prototype.showInfoKeyhelp = function() {
+	$('#keyhelpMain').sfKeyHelp({
+		'return': 'Return'
+	});
+};
+
+SceneMain.prototype.reload = function() {
+	var url = this.url + '/api/channel/grid';
+	if (this.settings.login) {
+		this.list.load(url, this.settings.user, this.settings.password);
+	} else {
+		this.list.load(url);
+	}
+};
+
+SceneMain.prototype.handleShow = function() {
+	alert("SceneMain.handleShow()");
+	this.showMainKeyhelp();
 	this.reload();
 };
 
@@ -59,38 +108,48 @@ SceneMain.prototype.handleBlur = function() {
 
 SceneMain.prototype.handleKeyDown = function(keyCode) {
 	alert("SceneMain.handleKeyDown(" + keyCode + ")");
-	switch (keyCode) {
-		case $.sfKey.UP:
-			this.list.up();
-			break;
-		case $.sfKey.DOWN:
-			this.list.down();
-			break;
-		case $.sfKey.LEFT:
-			this.list.left();
-			break;
-		case $.sfKey.RIGHT:
-			this.list.right();
-			break;
-		case $.sfKey.ENTER:
-			this.play(this.list.getCurrent());
-			break;
-		case $.sfKey.INFO:
-			this.showInfo(this.list.getCurrent());
-			break;
-		case $.sfKey.RED:
-			this.reload();
-			break;
-		case $.sfKey.FF:
-			this.list.nextPage();
-			break;
-		case $.sfKey.RW:
-			this.list.previousPage();
-			break;
-		case $.sfKey.BLUE:
-			$.sfScene.hide('Main');
-			$.sfScene.show('Settings');
-			$.sfScene.focus('Settings');
-			break;
+
+	if (this.showingInfo) {
+		switch (keyCode) {
+			case $.sfKey.RETURN:
+				$.sfKey.block();
+				this.hideInfo();
+				break;
+		}
+	} else {
+		switch (keyCode) {
+			case $.sfKey.UP:
+				this.list.up();
+				break;
+			case $.sfKey.DOWN:
+				this.list.down();
+				break;
+			case $.sfKey.LEFT:
+				this.list.left();
+				break;
+			case $.sfKey.RIGHT:
+				this.list.right();
+				break;
+			case $.sfKey.ENTER:
+				this.play(this.list.getCurrent());
+				break;
+			case $.sfKey.INFO:
+				this.showInfo(this.list.getCurrent());
+				break;
+			case $.sfKey.RED:
+				this.reload();
+				break;
+			case $.sfKey.FF:
+				this.list.nextPage();
+				break;
+			case $.sfKey.RW:
+				this.list.previousPage();
+				break;
+			case $.sfKey.BLUE:
+				$.sfScene.hide('Main');
+				$.sfScene.show('Settings');
+				$.sfScene.focus('Settings');
+				break;
+		}
 	}
 };

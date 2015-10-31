@@ -1,4 +1,4 @@
-function List(el) {
+function List(el, epg) {
 	this.$el = $(el);
 	this.$list = this.$el.find('.list');
 	this.$scrollbar = this.$el.find('.bar');
@@ -9,6 +9,7 @@ function List(el) {
 	this.index = 0;
 	this.focused = false;
 	this.loading = false;
+	this.epg = epg;
 }
 
 List.prototype = {
@@ -32,13 +33,16 @@ List.prototype = {
 				that.items = data.entries;
 				that.pageCount = Math.ceil(that.items.length / that.pageSize);
 				that._updateScrollbar();
-				that._setLoading(false);
-				that.show();
-				that.focus();
+
+				that.epg.load(that.items.length, function() {
+					that._setLoading(false);
+					that.show();
+					that.focus();
+				});
 			},
 
 			error: function(xhr) {
-				alert('List load error!');
+				alert('List load error: ' + xhr.statusText);
 				that._setLoading(false);
 				that._showError('Error loading channel list: ' + xhr.statusText);
 			}
@@ -62,7 +66,9 @@ List.prototype = {
 
 		for (var i = offset; i < len; i++) {
 			var item = this.items[i];
-			html.push('<li><p class="name">', item.svcname, '</p></li>');
+			var program = this.epg.get(item.uuid);
+			var progress = program ? this.epg.getProgress(program) : '';
+			html.push('<li><p class="name">', item.name, '</p><p class="program">', (program ? program.title : ''), '</p>', progress, '</li>');
 		}
 
 		this.$list.html(html.join(''));
@@ -166,15 +172,16 @@ List.prototype = {
 		index = index < 0 ? 0 : index > this.items.length - 1 ? this.items.length - 1 : index;
 
 		if (index !== this.index) {
-			this.index = index;
-
 			if (index < pageMin) {
 				this.previousPage();
-			} else if (index > pageMax) {
-				this.nextPage();
-			} else {
-				this._focusCurrent();
 			}
+
+			if (index > pageMax) {
+				this.nextPage();
+			}
+
+			this.index = index;
+			this._focusCurrent();
 		}
 	},
 
