@@ -41,6 +41,7 @@ var Player = {
 	},
 
 	play: function(url) {
+		alert('Player.play(' + url + ')');
 		if (this.state === this.STOPPED) {
 			this.plugin.Play(url);
 			this.state = this.PLAYING;
@@ -48,6 +49,7 @@ var Player = {
 	},
 
 	stop: function() {
+		alert('Player.stop()');
 		if (this.state === this.PLAYING) {
 			this.plugin.Stop();
 			this.state = this.STOPPED;
@@ -55,37 +57,37 @@ var Player = {
 	},
 
 	setCurrentTime: function(time) {
-		alert('setCurrentTime ' + time);
+		alert('Player.setCurrentTime(' + time + ')');
 	},
 
 	onStreamInfoReady: function() {
-		alert('onStreamInfoReady');
+		alert('Player.onStreamInfoReady()');
 	},
 
 	onBufferingStart: function() {
-		alert('onBufferingStart');
+		alert('Player.onBufferingStart()');
 	},
 
 	onBufferingComplete: function() {
-		alert('onBufferingComplete');
+		alert('Player.onBufferingComplete()');
 	},
 
 	onRenderingComplete: function() {
-		alert('onRenderingComplete');
+		alert('Player.onRenderingComplete()');
 	},
 
 	onNetworkDisconnected: function() {
-		alert('onNetworkDisconnected');
+		alert('Player.onNetworkDisconnected()');
 		this.state = this.STOPPED;
 	},
 
 	onRenderError: function() {
-		alert('onRenderError');
+		alert('Player.onRenderError()');
 		this.state = this.STOPPED;
 	},
 
 	onStreamNotFound: function() {
-		alert('onStreamNotFound');
+		alert('Player.onStreamNotFound()');
 		this.state = this.STOPPED;
 	}
 };

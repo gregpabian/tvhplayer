@@ -2,29 +2,34 @@ function List(el) {
 	this.$el = $(el);
 	this.$list = this.$el.find('.list');
 	this.$scrollbar = this.$el.find('.bar');
+	this.$error = this.$el.find('.error');
+	this.items = [];
 	this.page = 0;
 	this.pageCount = 0;
-	this.pageSize = 10;
 	this.index = 0;
-	this.items = [];
 	this.focused = false;
 	this.loading = false;
 }
 
 List.prototype = {
-	load: function(url) {
+	pageSize: 10,
+
+	load: function(url, username, password) {
 		var that = this;
 
 		this._setLoading(true);
+		this._hideError();
 		this.$list.empty();
+		this.items = [];
+		this.page = 0;
+		this.index = 0;
+		this.pageCount = 0;
 
-		$.ajax({
+		var config = {
 			url: url,
 			success: function(data) {
 				alert('List loaded.');
 				that.items = data.entries;
-				that.page = 0;
-				that.index = 0;
 				that.pageCount = Math.ceil(that.items.length / that.pageSize);
 				that._updateScrollbar();
 				that._setLoading(false);
@@ -32,11 +37,19 @@ List.prototype = {
 				that.focus();
 			},
 
-			error: function() {
+			error: function(xhr) {
 				alert('List load error!');
 				that._setLoading(false);
+				that._showError('Error loading channel list: ' + xhr.statusText);
 			}
-		});
+		};
+
+		if (username && password) {
+			config.username = username;
+			config.password = password;
+		}
+
+		$.ajax(config);
 	},
 
 	show: function() {
@@ -163,5 +176,13 @@ List.prototype = {
 				this._focusCurrent();
 			}
 		}
+	},
+
+	_showError: function(text) {
+		this.$error.text(text).show();
+	},
+
+	_hideError: function() {
+		this.$error.empty().hide();
 	}
 };

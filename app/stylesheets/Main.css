@@ -81,3 +81,19 @@
 	height: 10px;
 	background: #666;
 }
+
+#list .error {
+	font-size: 18px;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	margin-top: -8px;
+	text-align: center;
+	display: none;
+	color: #e00;
+}
+
+.sf-ui-keyhelp {
+	background: #333;
+}

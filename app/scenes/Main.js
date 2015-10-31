@@ -18,6 +18,16 @@ SceneMain.prototype.showInfo = function(item) {
 	alert("SceneMain.showInfo()");
 };
 
+SceneMain.prototype.reload = function() {
+	var settings = Settings.settings;
+
+	if (settings.login) {
+		this.list.load(this.url, settings.user, settings.password);
+	} else {
+		this.list.load(this.url);
+	}
+};
+
 SceneMain.prototype.handleShow = function() {
 	alert("SceneMain.handleShow()");
 	$('#keyhelpMain').sfKeyHelp({
@@ -30,7 +40,7 @@ SceneMain.prototype.handleShow = function() {
 		'return': 'Return'
 	});
 
-	this.list.load(this.url);
+	this.reload();
 };
 
 SceneMain.prototype.handleHide = function() {
@@ -69,7 +79,7 @@ SceneMain.prototype.handleKeyDown = function(keyCode) {
 			this.showInfo(this.list.getCurrent());
 			break;
 		case $.sfKey.RED:
-			this.list.load(this.url);
+			this.reload();
 			break;
 		case $.sfKey.FF:
 			this.list.nextPage();

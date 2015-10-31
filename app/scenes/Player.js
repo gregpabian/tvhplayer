@@ -10,7 +10,7 @@ ScenePlayer.prototype.initialize = function() {
 	var that = this;
 
 	Player.onBufferingStart = function() {
-		alert('Player.onBufferingStart');
+		alert('onBufferingStart');
 		that.show();
 		that.showLoading();
 		that.updateKeyhelp('Buffering');
@@ -18,7 +18,7 @@ ScenePlayer.prototype.initialize = function() {
 	};
 
 	Player.onBufferingComplete = function() {
-		alert('Player.onBufferingComplete');
+		alert('onBufferingComplete');
 		that.hide();
 		that.hideLoading();
 		that.updateKeyhelp();
@@ -26,7 +26,7 @@ ScenePlayer.prototype.initialize = function() {
 	};
 
 	Player.onNetworkDisconnected = function() {
-		alert('Player.onBufferingComplete');
+		alert('onBufferingComplete');
 		Player.state = Player.STOPPED;
 		that.show();
 		that.hideLoading();
@@ -35,7 +35,7 @@ ScenePlayer.prototype.initialize = function() {
 	};
 
 	Player.onRenderError = function() {
-		alert('Player.onRenderError');
+		alert('onRenderError');
 		Player.state = Player.STOPPED;
 		that.show();
 		that.hideLoading();
@@ -44,7 +44,7 @@ ScenePlayer.prototype.initialize = function() {
 	};
 
 	Player.onStreamNotFound = function() {
-		alert('Player.onStreamNotFound');
+		alert('onStreamNotFound');
 		Player.state = Player.STOPPED;
 		that.show();
 		that.hideLoading();
@@ -93,7 +93,14 @@ ScenePlayer.prototype.handleShow = function(item) {
 
 	this.updateKeyhelp();
 
-	var url = 'http://' + settings.address + ':' + settings.port + '/stream/service/' + item.uuid;
+	var url;
+
+	if (settings.login) {
+		// TODO: could this be improved?
+		url = 'http://' + settings.user + ':' + settings.password + '@' + settings.address + ':' + settings.port + '/stream/service/' + item.uuid;
+	} else {
+		url = 'http://' + settings.address + ':' + settings.port + '/stream/service/' + item.uuid;
+	}
 
 	Player.play(url);
 };
