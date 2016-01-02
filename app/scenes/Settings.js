@@ -142,7 +142,7 @@ SceneSettings.prototype.handleBlur = function() {
 
 SceneSettings.prototype.handleKeyDown = function(keyCode) {
 	alert("SceneSettings.handleKeyDown(" + keyCode + ")");
-	// TODO : write an key event handler when this scene get focued
+	// TODO : write an key event handler when this scene get focused
 	switch (keyCode) {
 		case $.sfKey.UP:
 			this.previous();

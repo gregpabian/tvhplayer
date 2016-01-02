@@ -64,26 +64,32 @@
 }
 
 .list .program {
+	display: block;
 	margin: 0;
 	padding: 0;
 	color: #aaa;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	width: 100%;
 }
 
 .list .focused .program {
-	color: #9cf;
+	color: #cef;
 }
 
 .list .progress {
 	position: absolute;
-	bottom: 10px;
-	right: 10px;
+	bottom: 0;
+	left: 0;
 	margin: 0;
 	padding: 0;
-	color: #999;
+	height: 5px;
+	background: #666;
 }
 
 .list .focused .progress {
-	color: #6cf;
+	background: #6cf;
 }
 
 .loading .scrollbar {

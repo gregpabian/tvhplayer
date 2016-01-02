@@ -31,6 +31,9 @@ List.prototype = {
 			success: function(data) {
 				alert('List loaded.');
 				that.items = data.entries;
+				that.items.sort(function (a, b) {
+					return a.number > b.number ? 1 : a.number < b.number ? -1 : 0;
+				});
 				that.pageCount = Math.ceil(that.items.length / that.pageSize);
 				that._updateScrollbar();
 
@@ -67,9 +70,12 @@ List.prototype = {
 		for (var i = offset; i < len; i++) {
 			var item = this.items[i];
 			var program = this.epg.get(item.uuid);
-			var progress = program ? this.epg.getProgress(program) : '';
-			html.push('<li><p class="name">', item.name, '</p><p class="program">', (program ? program.title : ''), '</p>', progress, '</li>');
+			var progress = program ? this.epg.getProgress(program) : 0;
+			html.push('<li><p class="name">', item.name, '</p><p class="program">', (program ? program.title : ''), '</p>',
+				'<div class="progress" style="width: ', progress, '"></div>', '</li>');
 		}
+
+		alert(html.join(''));
 
 		this.$list.html(html.join(''));
 

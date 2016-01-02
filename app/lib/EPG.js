@@ -56,6 +56,6 @@ var EPG = {
 		var progress = (now - start) / (stop - start) * 100;
 		progress = progress < 0 ? 0 : progress > 100 ? 100 : Math.round(progress);
 
-		return '<p class="progress">' + progress + '%</p>';
+		return progress + '%';
 	}
 };
