@@ -69,13 +69,24 @@ List.prototype = {
 
 		for (var i = offset; i < len; i++) {
 			var item = this.items[i];
+			var hasIcon = /https?/.test(item.icon_public_url);
 			var program = this.epg.get(item.uuid);
 			var progress = program ? this.epg.getProgress(program) : 0;
-			html.push('<li><p class="name">', item.name, '</p><p class="program">', (program ? program.title : ''), '</p>',
-				'<div class="progress" style="width: ', progress, '"></div>', '</li>');
-		}
+			html.push('<li>');
 
-		alert(html.join(''));
+			if (hasIcon) {
+				html.push('<img src="', item.icon_public_url, '" class="icon">', '<div class="details">');
+			}
+
+			html.push('<p class="name">', item.name, '</p><p class="program">', (program ? program.title : ''), '</p>',
+				'<div class="progress" style="width: ', progress, '"></div>');
+
+			if (hasIcon) {
+				html.push('</div>');
+			}
+
+			html.push('</li>');
+		}
 
 		this.$list.html(html.join(''));
 
@@ -130,13 +141,13 @@ List.prototype = {
 		if (this.index % 2) {
 			this._changeIndexBy(-1);
 		} else {
-			this.previousPage();
+			this._changeIndexBy(-this.pageSize + 1);
 		}
 	},
 
 	right: function() {
 		if (this.index % 2) {
-			this.nextPage();
+			this._changeIndexBy(this.pageSize - 1);
 		} else {
 			this._changeIndexBy(1);
 		}

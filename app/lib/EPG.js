@@ -57,5 +57,36 @@ var EPG = {
 		progress = progress < 0 ? 0 : progress > 100 ? 100 : Math.round(progress);
 
 		return progress + '%';
+	},
+
+	getNextPrograms: function (channel, callback) {
+		alert('EPG.getNextPrograms(' + channel+ ')');
+		var url = 'http://' + this.settings.address + ':' + this.settings.port + '/api/epg/events/grid';
+
+		var config = {
+			url: url,
+			data: {
+				channel: channel,
+				start: 0,
+				limit: 6
+			},
+
+			success: function(data) {
+				alert('EPG next programmes loaded.');
+				callback(data ? data.entries : []);
+			},
+
+			error: function(xhr, error, status) {
+				alert('EPG next programmes load error: ' + xhr.statusText);
+				callback(xhr.statusText);
+			}
+		};
+
+		if (this.settings.login) {
+			config.username = this.settings.user;
+			config.password = this.settings.password;
+		}
+
+		$.ajax(config);
 	}
 };

@@ -19,37 +19,60 @@ SceneMain.prototype.play = function(item) {
 };
 
 SceneMain.prototype.showInfo = function(item) {
+	var that = this;
+
 	alert("SceneMain.showInfo()");
 	this.showingInfo = true;
 	this.showInfoKeyhelp();
 	this.list.blur();
 	this.$info.show();
 
-	var epg = this.epg.get(item.uuid) || {};
-	var iconUrl = /https?/.test(epg.channelIcon) ? epg.channelIcon : this.url + '/' + epg.channelIcon;
-
-	function pad(num) {
-		return num < 10 ? '0' + num : num;
-	}
-
-	function formatDate(timestamp) {
-		var date = new Date(timestamp * 1000);
-
-		return date.getHours() + ':' + pad(date.getMinutes());
-	}
+	that.$infoBox.css('visibility', 'hidden');
+	this.$info.find('.loader').dzLoader('show');
 
 	var html = [
-		'<img class="logo" src="', iconUrl, '">',
-		'<p class="channel-name">', (epg.channelName || item.name), '</p>',
-		'<p class="program-title">', epg.title, '</p>',
-		'<p class="duration">', formatDate(epg.start), ' - ', formatDate(epg.stop), '</p>',
-		'<p class="summary">', epg.summary, '</p>'
+		'<p class="channel-name">', item.name, '</p>'
 	];
 
-	this.$infoBox.css('visibility', 'hidden');
-	this.$infoBox.html(html.join(''));
-	this.$infoBox.css('margin-top', -this.$infoBox.height() / 2 + 'px');
-	this.$infoBox.css('visibility', 'visible');
+	// inject logo if available
+	if (/https?/.test(item.icon_public_url)) {
+		html.unshift('<img class="logo" src="' + item.icon_public_url + '">');
+	}
+
+	this.epg.getNextPrograms(item.uuid, function (next) {
+		that.$info.find('.loader').dzLoader('hide');
+
+		if (next && typeof next == 'object' && next.length) {
+			epg = next[0];
+		} else {
+			next = null;
+			epg = that.epg.get(item.uuid) || {};
+		}
+
+		html.push(
+			'<p class="program-title">', epg.title, '</p>',
+			'<p class="summary">', formatDate(epg.start), ' - ', formatDate(epg.stop), ' ',  epg.summary, '</p>',
+			'<p class="description">', epg.description, '</p>'
+		);
+
+		if (next) {
+			html.push('<p class="next">Next:</p>');
+			for (var i = 1; i < next.length; i++) {
+				html.push(
+					'<p class="next"><span>', formatDate(next[i].start), ' - ', formatDate(next[i].stop), '</span> ',
+					next[i].title, '</p>'
+				);
+			}
+		}
+
+		that.$infoBox.html(html.join(''));
+		that.$infoBox.css('margin-top', -that.$infoBox.height() / 2 - 35 + 'px');
+		that.$infoBox.css('visibility', 'visible');
+	});
+};
+
+SceneMain.prototype.buildInfo = function(data) {
+
 };
 
 SceneMain.prototype.hideInfo = function() {
@@ -154,3 +177,13 @@ SceneMain.prototype.handleKeyDown = function(keyCode) {
 		}
 	}
 };
+
+function pad(num) {
+	return num < 10 ? '0' + num : num;
+}
+
+function formatDate(timestamp) {
+	var date = new Date(timestamp * 1000);
+
+	return date.getHours() + ':' + pad(date.getMinutes());
+}

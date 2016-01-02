@@ -45,6 +45,20 @@
 	border-left: 1px solid #666;
 }
 
+.list .icon {
+	margin-left: -10px;
+	margin-top: -5px;
+	float: left;
+	width: 70px;
+	height: 53px;
+}
+
+.list .details {
+	float: left;
+	margin-left: 5px;
+	width: 364px;
+}
+
 .list .focused {
 	background: #666;
 	border-top: 1px solid #999;
@@ -80,7 +94,7 @@
 
 .list .progress {
 	position: absolute;
-	bottom: 0;
+	bottom: -1px;
 	left: 0;
 	margin: 0;
 	padding: 0;
@@ -149,9 +163,9 @@
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	width: 359px;
+	width: 559px;
 	padding: 20px;
-	margin-left: -200px;
+	margin-left: -300px;
 	background: #333;
 	border-top: 1px solid #666;
 	border-left: 1px solid #666;
@@ -161,13 +175,35 @@
 	float: right;
 }
 
+.info-box .program-title {
+	margin: 0;
+	padding: 0;
+}
+
 .info-box .summary {
+	font-size: 0.875em;
 	color: #aaa;
+	margin-top: 0;
+}
+
+.info-box .description {
+	color: #aaa;
+	text-align: justify;
 }
 
 .info-box .channel-name {
 	font-size: 20px;
-	padding-bottom: 20px;
+	margin-top: 0;
+}
+
+.info-box .next {
+	margin-top: 0;
+	margin-bottom: 2px;
+}
+
+.info-box .next span {
+	font-size: 0.875em;
+	color: #aaa;
 }
 
 .sf-ui-keyhelp {
